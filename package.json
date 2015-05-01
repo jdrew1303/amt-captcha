@@ -1,0 +1,22 @@
+{
+  "name": "amt-captcha",
+  "version": "1.0.0",
+  "description": "Amazon Mechanical Turkでcaptchaのタスクを投げる時のデータ生成",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyage/amt-captcha.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tyage/amt-captcha/issues"
+  },
+  "homepage": "https://github.com/tyage/amt-captcha",
+  "dependencies": {
+    "captchagen": "^1.1.0"
+  }
+}
