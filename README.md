@@ -1,0 +1,1 @@
+Amazon Mechanical Turkでcaptchaのタスクを投げる時のデータ生成
