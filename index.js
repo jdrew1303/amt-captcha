@@ -6,12 +6,17 @@ var imageOutputDir = './output/images/';
 var imageUrlPrefix = 'http://localhost:3000/';
 var times = +process.argv[2];
 
+// remove old images
+fs.readdirSync(imageOutputDir).forEach((file) => {
+  if (file.match(/\.png$/)) {
+    fs.unlinkSync(imageOutputDir + file);
+  }
+})
+
 // generate images
-var captchas = [];
-for (var i = 0; i < times; ++i) {
+var generateCaptcha = (filename) => {
   var captcha = captchagen.create();
-  var filePath = imageOutputDir + i.toString() + '.png';
-  console.log(captcha.text(), filePath);
+  var filePath = imageOutputDir + filename;
 
   captcha.generate();
 
@@ -19,14 +24,21 @@ for (var i = 0; i < times; ++i) {
     fs.writeFile(filePath, buffer);
   });
 
+  return captcha;
+};
+var captchas = [];
+for (var i = 0; i < times; ++i) {
+  var filename = i.toString() + '.png';
+  var captcha = generateCaptcha(filename);
   captchas.push(captcha);
+  console.log(captcha.text(), filename);
 }
 
 // generate csv
-var header = ['image', 'answer'].join(', ');
+var header = ['image', 'answer'].join(',');
 var body = captchas.map((captcha, i) => [
   imageUrlPrefix + i.toString() + '.png',
   captcha.text()
-].join(', '));
+].join(','));
 var data = header + '\n' + body.join('\n');
 fs.writeFile(dataFilePath, data);
