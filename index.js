@@ -1,15 +1,13 @@
 var captchagen = require('captchagen');
 var fs = require('fs');
+var config = require('./config.js')
 
-var dataFilePath = './output/data.csv';
-var imageOutputDir = './output/images/';
-var imageUrlPrefix = 'http://localhost:3000/';
 var times = +process.argv[2];
 
 // remove old images
-fs.readdirSync(imageOutputDir).forEach((file) => {
+fs.readdirSync(config.imageOutputDir).forEach((file) => {
   if (file.match(/\.png$/)) {
-    fs.unlinkSync(imageOutputDir + file);
+    fs.unlinkSync(config.imageOutputDir + file);
   }
 })
 
@@ -22,7 +20,7 @@ var generateCaptcha = (filename) => {
   captcha.generate();
 
   captcha.buffer((e, buffer) => {
-    var filePath = imageOutputDir + filename;
+    var filePath = config.imageOutputDir + filename;
     fs.writeFile(filePath, buffer);
   });
 
@@ -39,8 +37,8 @@ for (var i = 0; i < times; ++i) {
 // generate csv
 var header = ['image', 'answer'].join(',');
 var body = captchas.map((captcha, i) => [
-  imageUrlPrefix + i.toString() + '.png',
+  config.imageUrlPrefix + i.toString() + '.png',
   captcha.text()
 ].join(','));
 var data = header + '\n' + body.join('\n');
-fs.writeFile(dataFilePath, data);
+fs.writeFile(config.dataFilePath, data);

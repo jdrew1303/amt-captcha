@@ -1,0 +1,5 @@
+module.exports = {
+  dataFilePath: './output/data.csv',
+  imageOutputDir: './output/images/',
+  imageUrlPrefix: 'http://localhost:3000/'
+};
