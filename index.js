@@ -15,12 +15,14 @@ fs.readdirSync(imageOutputDir).forEach((file) => {
 
 // generate images
 var generateCaptcha = (filename) => {
-  var captcha = captchagen.create();
-  var filePath = imageOutputDir + filename;
-
+  var captcha = new captchagen.Captcha();
+  captcha.use(captchagen.drawBackground);
+  captcha.use(captchagen.drawText);
+  captcha.use(captchagen.drawLines);
   captcha.generate();
 
   captcha.buffer((e, buffer) => {
+    var filePath = imageOutputDir + filename;
     fs.writeFile(filePath, buffer);
   });
 
